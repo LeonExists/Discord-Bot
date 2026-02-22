@@ -10,8 +10,8 @@ level = [
     [1, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1]
 ]
-# 0 = empty, 1 = wall, 2 = player, 3 = box, 4 = goal
 
+# mapping
 game_mapping = {
     0 : ":black_large_square:",
     1 : ":red_square:",
@@ -20,16 +20,13 @@ game_mapping = {
     4 : Goal(0, 0)
 }
 
-
-
+# Game
 class Game:
     def __init__(self, msg):
         # discord utility
         self.msg = msg
 
         # game
-        self.output = [[]]
-
         self.map = [[]]
         self.entities = []
         self.create_game()
@@ -65,12 +62,12 @@ class Game:
 
     def render(self):
         # render map
-        self.output = [[game_mapping[cell] for cell in row] for row in self.map]
-
-        print(f"Render, 1: \n {self.output}")
+        output = [[game_mapping[cell] for cell in row] for row in self.map]
 
         # render entities
         for entity in self.entities:
-            self.output[entity.y][entity.x] = entity.icon
+            output[entity.y][entity.x] = entity.icon
 
-        print(f"Render, 2: \n {self.output}")
+        # output
+        output = '\n'.join([''.join(row) for row in output])
+        return output
